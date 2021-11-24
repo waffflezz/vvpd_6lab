@@ -19,6 +19,8 @@ def main():
             raise ValueError
         dates_list.append(n)
 
+    print(f'Оценка = {5 - deadline_score(dates_list[0], dates_list[1])}')
+
 
 def deadline_score(pass_date: str, deadline_date: str) -> int:
     """
