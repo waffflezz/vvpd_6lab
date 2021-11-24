@@ -27,8 +27,7 @@ def main():
 
 def deadline_score(pass_date: str, deadline_date: str) -> int:
     """
-    Функция сообщает какая будет оценка, исходя из даты дедлайна и
-    даты сдачи работы
+    Функция сообщает какая будет оценка, исходя из дат дедлайна и сдачи работы
     :param pass_date: Дата сдачи
     :param deadline_date: Дата дедлайна
     :return: Оценка
