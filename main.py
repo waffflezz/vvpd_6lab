@@ -24,6 +24,13 @@ def main():
         dates_list.append(n)
 
     print(f'Оценка = {5 - deadline_score(dates_list[0], dates_list[1])}')
+    students = {
+        'Иванов': '03.09.2020',
+        'Петров': '01.09.2020',
+        'Астафьев': '03.09.2020'
+    }
+    deadline = '02.09.2020'
+    print(f'Дедлайн сгорел у: {late_list(students, deadline)}')
 
 
 def deadline_score(pass_date: str, deadline_date: str) -> int:
