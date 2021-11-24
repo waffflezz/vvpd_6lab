@@ -54,6 +54,12 @@ def deadline_score(pass_date: str, deadline_date: str) -> int:
 
 
 def late_list(grades: dict, deadline_date: str) -> List[str]:
+    """
+    Функция возвращает список студентов, которые сдали работу после дедлайна
+    :param grades: Словарь студентов (студент: дата сдачи работы)
+    :param deadline_date: Дата дедлайна
+    :return: Список с именами студентов
+    """
     deadline_date = dt.date(*map(int, (deadline_date[6:],
                                        deadline_date[3:5], deadline_date[:2])))
 
