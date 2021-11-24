@@ -1,6 +1,7 @@
 import re
 import datetime as dt
 import math
+from typing import List
 
 
 def main():
@@ -49,6 +50,30 @@ def deadline_score(pass_date: str, deadline_date: str) -> int:
         return 5
 
     return bad_rating
+
+
+def late_list(grades: dict, deadline_date: str) -> List[str]:
+    """
+    Функция возвращает список студентов, которые сдали работу после дедлайна
+    :param grades: Словарь студентов (студент: дата сдачи работы)
+    :param deadline_date: Дата дедлайна
+    :return: Список с именами студентов
+    """
+    deadline_date = dt.date(*map(int, (deadline_date[6:],
+                                       deadline_date[3:5], deadline_date[:2])))
+
+    students = []
+
+    for key, value in grades.items():
+        value_date = dt.date(*map(int, (value[6:],
+                                  value[3:5], value[:2])))
+
+        delta = value_date - deadline_date
+        delta = delta.days.real
+        if delta > 0:
+            students.append(key)
+
+    return sorted(students, key=lambda x: x[0])
 
 
 if __name__ == '__main__':
