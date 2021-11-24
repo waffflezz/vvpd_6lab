@@ -9,6 +9,7 @@ def main():
     }
     dates_list = []
 
+    print('Введите сначала дату сдачи лабораторной, а затем дату дедлайна')
     while len(dates_list) != 2:
         n = input()
         if not re.fullmatch(r'\d\d\.\d\d\.\d{4}', n):
