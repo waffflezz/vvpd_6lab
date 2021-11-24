@@ -14,10 +14,12 @@ def main():
     print('Введите сначала дату сдачи лабораторной, а затем дату дедлайна')
     while len(dates_list) != 2:
         n = input()
+
         if not re.fullmatch(r'\d\d\.\d\d\.\d{4}', n):
             raise ValueError
         if n[3:5] not in months or int(n[:2]) > int(months[n[3:5]]):
             raise ValueError
+        
         dates_list.append(n)
 
     print(f'Оценка = {5 - deadline_score(dates_list[0], dates_list[1])}')
