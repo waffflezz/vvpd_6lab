@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vvpd_6lab.main &#8212; deadline-manager 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/agogo.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../../index.html">deadline-manager 1.0 documentation</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for vvpd_6lab.main</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Скоробогатов Дмитрий Алексеевич, 15 вариант (2 задание), КИ21-17/1б</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../vvpd_6lab.html#vvpd_6lab.main.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">months</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;01&#39;</span><span class="p">:</span> <span class="s1">&#39;31&#39;</span><span class="p">,</span> <span class="s1">&#39;02&#39;</span><span class="p">:</span> <span class="s1">&#39;28&#39;</span><span class="p">,</span> <span class="s1">&#39;03&#39;</span><span class="p">:</span> <span class="s1">&#39;31&#39;</span><span class="p">,</span> <span class="s1">&#39;04&#39;</span><span class="p">:</span> <span class="s1">&#39;30&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;05&#39;</span><span class="p">:</span> <span class="s1">&#39;31&#39;</span><span class="p">,</span> <span class="s1">&#39;06&#39;</span><span class="p">:</span> <span class="s1">&#39;30&#39;</span><span class="p">,</span> <span class="s1">&#39;07&#39;</span><span class="p">:</span> <span class="s1">&#39;31&#39;</span><span class="p">,</span> <span class="s1">&#39;08&#39;</span><span class="p">:</span> <span class="s1">&#39;31&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;09&#39;</span><span class="p">:</span> <span class="s1">&#39;30&#39;</span><span class="p">,</span> <span class="s1">&#39;10&#39;</span><span class="p">:</span> <span class="s1">&#39;31&#39;</span><span class="p">,</span> <span class="s1">&#39;11&#39;</span><span class="p">:</span> <span class="s1">&#39;30&#39;</span><span class="p">,</span> <span class="s1">&#39;12&#39;</span><span class="p">:</span> <span class="s1">&#39;31&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">dates_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Введите сначала дату сдачи лабораторной, а затем дату дедлайна&#39;</span><span class="p">)</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">dates_list</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\d\d\.\d\d\.\d</span><span class="si">{4}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+        <span class="k">if</span> <span class="n">n</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">months</span> <span class="ow">or</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span> <span class="o">&gt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">months</span><span class="p">[</span><span class="n">n</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">5</span><span class="p">]]):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+        
+        <span class="n">dates_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Оценка = </span><span class="si">{</span><span class="mi">5</span> <span class="o">-</span> <span class="n">deadline_score</span><span class="p">(</span><span class="n">dates_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dates_list</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">students</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;Иванов&#39;</span><span class="p">:</span> <span class="s1">&#39;03.09.2020&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Петров&#39;</span><span class="p">:</span> <span class="s1">&#39;01.09.2020&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Астафьев&#39;</span><span class="p">:</span> <span class="s1">&#39;03.09.2020&#39;</span>
+    <span class="p">}</span>
+    <span class="n">deadline</span> <span class="o">=</span> <span class="s1">&#39;02.09.2020&#39;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Дедлайн сгорел у: </span><span class="si">{</span><span class="n">late_list</span><span class="p">(</span><span class="n">students</span><span class="p">,</span> <span class="n">deadline</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="deadline_score"><a class="viewcode-back" href="../../vvpd_6lab.html#vvpd_6lab.main.deadline_score">[docs]</a><span class="k">def</span> <span class="nf">deadline_score</span><span class="p">(</span><span class="n">pass_date</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">deadline_date</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot; Функция сообщает какая будет оценка, исходя из дат дедлайна и</span>
+<span class="sd">    сдачи работы</span>
+
+<span class="sd">    :param pass_date: Дата сдачи</span>
+<span class="sd">    :param deadline_date: Дата дедлайна</span>
+<span class="sd">    :return int: Оценка</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pass_date</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="o">*</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="p">(</span><span class="n">pass_date</span><span class="p">[</span><span class="mi">6</span><span class="p">:],</span>
+                                   <span class="n">pass_date</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">5</span><span class="p">],</span> <span class="n">pass_date</span><span class="p">[:</span><span class="mi">2</span><span class="p">])))</span>
+
+    <span class="n">deadline_date</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="o">*</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="p">(</span><span class="n">deadline_date</span><span class="p">[</span><span class="mi">6</span><span class="p">:],</span>
+                                 <span class="n">deadline_date</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">5</span><span class="p">],</span> <span class="n">deadline_date</span><span class="p">[:</span><span class="mi">2</span><span class="p">])))</span>
+
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">pass_date</span> <span class="o">-</span> <span class="n">deadline_date</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">delta</span><span class="o">.</span><span class="n">days</span><span class="o">.</span><span class="n">real</span>
+    <span class="k">if</span> <span class="n">delta</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="n">rating</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">delta</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">rating</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">5</span>
+
+    <span class="k">return</span> <span class="n">rating</span></div>
+
+
+<div class="viewcode-block" id="late_list"><a class="viewcode-back" href="../../vvpd_6lab.html#vvpd_6lab.main.late_list">[docs]</a><span class="k">def</span> <span class="nf">late_list</span><span class="p">(</span><span class="n">grades</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">deadline_date</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot; Функция возвращает список студентов, которые сдали работу</span>
+<span class="sd">    после дедлайна</span>
+
+<span class="sd">    :param grades: Словарь студентов (студент: дата сдачи работы)</span>
+<span class="sd">    :param deadline_date: Дата дедлайна</span>
+<span class="sd">    :return list: Список с именами студентов</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">deadline_date</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="o">*</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="p">(</span><span class="n">deadline_date</span><span class="p">[</span><span class="mi">6</span><span class="p">:],</span>
+                                       <span class="n">deadline_date</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">5</span><span class="p">],</span> <span class="n">deadline_date</span><span class="p">[:</span><span class="mi">2</span><span class="p">])))</span>
+
+    <span class="n">students</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">grades</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">value_date</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="o">*</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="mi">6</span><span class="p">:],</span>
+                                  <span class="n">value</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">5</span><span class="p">],</span> <span class="n">value</span><span class="p">[:</span><span class="mi">2</span><span class="p">])))</span>
+
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">value_date</span> <span class="o">-</span> <span class="n">deadline_date</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">delta</span><span class="o">.</span><span class="n">days</span><span class="o">.</span><span class="n">real</span>
+        <span class="k">if</span> <span class="n">delta</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">students</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">students</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">vvpd_6lab</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="../../py-modindex.html" title="Python Module Index"
+              >modules</a> |
+            <a href="../../genindex.html" title="General Index"
+              >index</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Wafflezz.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.1.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

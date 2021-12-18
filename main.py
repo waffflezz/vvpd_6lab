@@ -39,11 +39,12 @@ def main():
 
 
 def deadline_score(pass_date: str, deadline_date: str) -> int:
-    """
-    Функция сообщает какая будет оценка, исходя из дат дедлайна и сдачи работы
+    """ Функция сообщает какая будет оценка, исходя из дат дедлайна и
+    сдачи работы
+
     :param pass_date: Дата сдачи
     :param deadline_date: Дата дедлайна
-    :return: Оценка
+    :return int: Оценка
     """
     pass_date = dt.date(*map(int, (pass_date[6:],
                                    pass_date[3:5], pass_date[:2])))
@@ -56,20 +57,21 @@ def deadline_score(pass_date: str, deadline_date: str) -> int:
     if delta < 0:
         return 0
 
-    bad_rating = math.ceil(delta / 7)
+    rating = math.ceil(delta / 7)
 
-    if bad_rating > 5:
+    if rating > 5:
         return 5
 
-    return bad_rating
+    return rating
 
 
 def late_list(grades: dict, deadline_date: str) -> List[str]:
-    """
-    Функция возвращает список студентов, которые сдали работу после дедлайна
+    """ Функция возвращает список студентов, которые сдали работу
+    после дедлайна
+
     :param grades: Словарь студентов (студент: дата сдачи работы)
     :param deadline_date: Дата дедлайна
-    :return: Список с именами студентов
+    :return list: Список с именами студентов
     """
     deadline_date = dt.date(*map(int, (deadline_date[6:],
                                        deadline_date[3:5], deadline_date[:2])))
